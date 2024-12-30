@@ -1,0 +1,591 @@
+APPENDIX 
+
+PATIENT DETAILS 
+
+Imports System.Data.SqlClient
+
+Public Class patient_details
+
+ Dim connection As New sqlconnection("Data Source=LAPTOP-
+
+FENEB2VD\SQLEXPRESS;Initial Catalog=project;Integrated Security=True")
+
+ Dim cn As New SqlConnection
+
+ Dim cmd As New SqlCommand
+
+ Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As
+
+System.EventArgs) Handles Button1.Click
+
+ Dim command As New SqlCommand("INSERT into 
+
+t2(patient_id,name,address,mobile_no,gender,age,blood_group) VALUES( '" & 
+
+TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & 
+
+TextBox4.Text & "','" & TextBox5.Text & "','" & TextBox6.Text & "','" & 
+
+TextBox7.Text & "')", connection)
+
+ connection.Open()
+
+ If command.ExecuteNonQuery() = 1 Then
+
+ MessageBox.Show("record inserted successfully")
+
+ Else
+
+ MessageBox.Show("record not inserted")
+
+ End If
+
+ connection.Close()
+
+ End Sub
+
+ Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As
+
+System.EventArgs) Handles Button2.Click
+
+ If TextBox1.Text = " " Then
+
+ MessageBox.Show("empty id")
+
+ Else
+
+ Dim command As New SqlCommand("UPDATE t2 SET 
+
+patient_id=@patient_id,name=@name,address=@address,mobile_no=@mobile_no,gender
+
+=@gender,age=@age,blood_group=@blood_group WHERE patient_id=@patient_id", 
+
+connection)
+
+ command.Parameters.Add("@name", SqlDbType.VarChar).Value = 
+
+TextBox2.Text
+
+ command.Parameters.Add("@address", SqlDbType.VarChar).Value = 
+
+TextBox3.Text
+
+ command.Parameters.Add("@mobile_no", SqlDbType.VarChar).Value =
+
+TextBox4.Text
+
+ command.Parameters.Add("@gender", SqlDbType.VarChar).Value = 
+
+TextBox5.Text
+
+ command.Parameters.Add("@age", SqlDbType.VarChar).Value = 
+
+TextBox6.Text
+
+ command.Parameters.Add("@blood_group", SqlDbType.VarChar).Value = 
+TextBox7.Text 
+ command.Parameters.Add("@patient_id", SqlDbType.VarChar).Value = 
+TextBox1.Text
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record updated")
+ Else
+ MessageBox.Show("record not updated")
+ End If
+ connection.Close()
+ End If
+ End Sub
+ Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button3.Click
+ Dim command As New SqlCommand("DELETE FROM t2 WHERE name= @name", 
+connection)
+ command.Parameters.Add("@name", SqlDbType.VarChar).Value = 
+TextBox2.Text
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record deleted")
+ Else
+ MessageBox.Show("record not deleted")
+ End If
+ connection.Close()
+ End Sub
+ Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button4.Click
+ Dim command As New SqlCommand("select * from t2 where patient_id = 
+@patient_id", connection)
+ command.Parameters.Add("@patient_id", SqlDbType.VarChar).Value = 
+TextBox1.Text
+ Dim adapter As New SqlDataAdapter(command)
+ Dim table As New DataTable()
+ adapter.Fill(table)
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ TextBox7.Text = ""
+ If table.Rows.Count() > 0 Then
+ TextBox1.Text = table.Rows(0)(0).ToString()
+ TextBox2.Text = table.Rows(0)(1).ToString()
+ TextBox3.Text = table.Rows(0)(2).ToString()
+ TextBox4.Text = table.Rows(0)(3).ToString()
+ TextBox5.Text = table.Rows(0)(4).ToString()
+ TextBox6.Text = table.Rows(0)(5).ToString()
+ TextBox7.Text = table.Rows(0)(6).ToString()
+ Else
+ MessageBox.Show("NO Data Found")
+ End If
+ End Sub
+ Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button5.Click
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ TextBox7.Text = ""
+ End Sub
+ Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button6.Click
+ End
+ End Sub
+ Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button7.Click
+ patient_report_details.Show()
+ End Sub
+End Class
+
+ 
+DOCTOR DETAILS
+
+
+Imports System.Data.SqlClient
+Public Class doctor_details
+ Dim connection As New SqlConnection("Data Source=LAPTOP-
+FENEB2VD\SQLEXPRESS;Initial Catalog=project;Integrated Security=True")
+ Dim cn As New SqlConnection
+ Dim cmd As New SqlCommand
+ Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button1.Click
+ Dim command As New SqlCommand("INSERT into 
+t3(doctor_id,name,age,gender,address,mobile_no,department) VALUES( '" & 
+TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & 
+TextBox4.Text & "','" & TextBox5.Text & "','" & TextBox6.Text & "','" & 
+TextBox7.Text & "')", connection)
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record inserted successfully")
+ Else
+ MessageBox.Show("record not inserted")
+ End If
+ connection.Close()
+ End Sub
+ Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button2.Click
+ If TextBox1.Text = " " Then
+ MessageBox.Show("empty id")
+ Else
+ Dim command As New SqlCommand("UPDATE t3 SET 
+doctor_id=@doctor_id,name=@name,age=@age,gender=@gender,address=@address,mobil
+e_no=@mobile_no,department=@department WHERE doctor_id=@doctor_id", 
+connection)
+ command.Parameters.Add("@name", SqlDbType.VarChar).Value = 
+TextBox2.Text
+ command.Parameters.Add("@age", SqlDbType.VarChar).Value = 
+TextBox3.Text
+ command.Parameters.Add("@gender", SqlDbType.VarChar).Value = 
+TextBox4.Text
+ command.Parameters.Add("@address", SqlDbType.VarChar).Value = 
+TextBox5.Text
+ command.Parameters.Add("@mobile_no", SqlDbType.VarChar).Value = 
+TextBox6.Text
+ command.Parameters.Add("@department", SqlDbType.VarChar).Value = TextBox7.Text
+ command.Parameters.Add("@doctor_id", SqlDbType.VarChar).Value = 
+TextBox1.Text
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record updated")
+ Else
+ MessageBox.Show("record not updated")
+ End If
+ connection.Close()
+ End If
+ End Sub
+ Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button3.Click
+ Dim command As New SqlCommand("DELETE FROM t3 WHERE name= @name", 
+connection)
+ command.Parameters.Add("@name", SqlDbType.VarChar).Value = 
+TextBox2.Text
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record deleted")
+ Else
+ MessageBox.Show("record not deleted")
+ End If
+ connection.Close()
+ End Sub
+ Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button4.Click
+ Dim command As New SqlCommand("select * from t3 where doctor_id = 
+@doctor_id", connection)
+ command.Parameters.Add("@doctor_id", SqlDbType.VarChar).Value = 
+TextBox1.Text
+ Dim adapter As New SqlDataAdapter(command)
+ Dim table As New DataTable()
+ adapter.Fill(table)
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ TextBox7.Text = ""
+ If table.Rows.Count() > 0 Then
+ 
+ TextBox1.Text = table.Rows(0)(0).ToString()
+ TextBox2.Text = table.Rows(0)(1).ToString()
+ TextBox3.Text = table.Rows(0)(2).ToString()
+ TextBox4.Text = table.Rows(0)(3).ToString()
+ TextBox5.Text = table.Rows(0)(4).ToString()
+ TextBox6.Text = table.Rows(0)(5).ToString()
+ TextBox7.Text = table.Rows(0)(6).ToString()
+ Else
+ MessageBox.Show("NO Data Found")
+ End If
+ End Sub
+ Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button5.Click
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ TextBox7.Text = ""
+ End Sub
+ Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button6.Click
+ End
+ End Sub
+ Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button7.Click
+ doctor_report.show()
+ End Sub
+End Class
+
+
+EMPLOYEE DETAILS 
+
+
+Imports System.Data.SqlClient
+Public Class employee_details
+ Dim connection As New SqlConnection("Data Source=LAPTOP-
+FENEB2VD\SQLEXPRESS;Initial Catalog=project;Integrated Security=True")
+ Dim cn As New SqlConnection
+ Dim cmd As New SqlCommand
+ Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button1.Click
+ Dim command As New SqlCommand("INSERT into 
+t5(employee_id,employee_name,mobile_no,qualification,job,date_of_join) 
+VALUES( '" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & 
+"','" & TextBox4.Text & "','" & TextBox5.Text & "','" & TextBox6.Text & "')", 
+connection)
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record inserted sucessfully")
+ End If
+ connection.Close()
+ End Sub
+ Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button2.Click
+ If TextBox1.Text = " " Then
+ MessageBox.Show("empty id")
+ Else
+ Dim command As New SqlCommand("UPDATE t5 SET 
+employee_id=@employee_id,employee_name=@employee_name,mobile_no=@mobile_no,qua
+lification=@qualification,job=@job,date_of_join=@date_of_join WHERE 
+employee_id=@employee_id", connection)
+ command.Parameters.Add("@employee_name", SqlDbType.VarChar).Value 
+= TextBox2.Text
+ command.Parameters.Add("@mobile_no", SqlDbType.VarChar).Value = 
+TextBox3.Text
+ 
+ 
+command.Parameters.Add("@qualification", SqlDbType.VarChar).Value = 
+TextBox4.Text
+ command.Parameters.Add("@job", SqlDbType.VarChar).Value = 
+TextBox5.Text
+ command.Parameters.Add("@date_of_join", SqlDbType.VarChar).Value = 
+TextBox6.Text
+ command.Parameters.Add("@employee_id", SqlDbType.VarChar).Value = 
+TextBox1.Text
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record updated")
+ Else
+ MessageBox.Show("record not updated")
+ End If
+ connection.Close()
+ End If
+ End Sub
+ Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button3.Click
+ Dim command As New SqlCommand("DELETE FROM t5 WHERE employee_name= 
+@employee_name", connection)
+ command.Parameters.Add("@employee_name", SqlDbType.VarChar).Value = 
+TextBox2.Text
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record deleted")
+ Else
+ MessageBox.Show("record not deleted")
+ End If
+ connection.Close()
+ End Sub
+ Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button4.Click
+ Dim command As New SqlCommand("select * from t5 where employee_id = 
+@employee_id", connection)
+ command.Parameters.Add("@employee_id", SqlDbType.VarChar).Value = 
+TextBox1.Text
+ Dim adapter As New SqlDataAdapter(command)
+ Dim table As New DataTable()
+ adapter.Fill(table)
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ If table.Rows.Count() > 0 Then
+ TextBox1.Text = table.Rows(0)(0).ToString()
+ TextBox2.Text = table.Rows(0)(1).ToString()
+ TextBox3.Text = table.Rows(0)(2).ToString()
+ TextBox4.Text = table.Rows(0)(3).ToString()
+ TextBox5.Text = table.Rows(0)(4).ToString()
+ TextBox6.Text = table.Rows(0)(5).ToString()
+ Else
+ MessageBox.Show("NO Data Found")
+ End If
+ End Sub
+ Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button5.Click
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ End Sub
+ Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button6.Click
+ End
+ End Sub
+ Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button7.Click
+ employee_report.show()
+ End Sub
+End Class
+
+
+APPOINTMENT DETAILS 
+
+
+Imports System.Data.SqlClient
+Public Class appointment_details
+ Dim connection As New SqlConnection("Data Source=LAPTOP-
+FENEB2VD\SQLEXPRESS;Initial Catalog=project;Integrated Security=True")
+ Dim cn As New SqlConnection
+ Dim cmd As New SqlCommand
+ Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button1.Click
+ Dim command As New SqlCommand("INSERT into 
+t6(appointment_id,patient_id,name,appointment_date,appointment_time,appointmen
+t_type) VALUES( '" & TextBox1.Text & "','" & TextBox2.Text & "','" & 
+TextBox3.Text & "','" & TextBox4.Text & "','" & TextBox5.Text & "','" & 
+TextBox6.Text & "')", connection)
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record inserted sucessfully")
+ Else
+ MessageBox.Show("record not inserted")
+ End If
+ connection.Close()
+ End Sub
+ Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button2.Click
+ If TextBox1.Text = " " Then
+ MessageBox.Show("empty id")
+ Else
+ Dim command As New SqlCommand("UPDATE t6 SET 
+appointment_id=@appointment_id,patient_id=@patient_id,name=@name,appointment_d
+ate=@appointment_date,appointment_time=@appointment_time,appointment_type=@app
+ointment_type WHERE appointment_id=@appointment_id", connection)
+ command.Parameters.Add("@patient_id", SqlDbType.VarChar).Value = 
+TextBox2.Text
+ command.Parameters.Add("@name", SqlDbType.VarChar).Value = 
+TextBox3.Text
+ command.Parameters.Add("@appointment_date", 
+SqlDbType.VarChar).Value = TextBox4.Text
+ command.Parameters.Add("@appointment_time", 
+SqlDbType.VarChar).Value = TextBox5.Text
+ command.Parameters.Add("@appointment_type", 
+SqlDbType.VarChar).Value = TextBox6.Text
+ command.Parameters.Add("@appointment_id", SqlDbType.VarChar).Value 
+= TextBox1.Text
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record updated")
+ Else
+ MessageBox.Show("record not updated")
+ End If
+ connection.Close()
+ End If
+ End Sub
+ Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button3.Click
+ Dim command As New SqlCommand("DELETE FROM t6 WHERE patient_id= 
+@patient_id", connection)
+ command.Parameters.Add("@patient_id", SqlDbType.VarChar).Value = 
+TextBox2.Text
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record deleted")
+ Else
+ MessageBox.Show("record not deleted")
+ End If
+ connection.Close()
+ End Sub
+ Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button4.Click
+ Dim command As New SqlCommand("select * from t6 where appointment_id = 
+@appointment_id", connection)
+ command.Parameters.Add("@appointment_id", SqlDbType.VarChar).Value = 
+TextBox1.Text
+ Dim adapter As New SqlDataAdapter(command)
+ Dim table As New DataTable()
+ adapter.Fill(table)
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = "” 
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ If table.Rows.Count() > 0 Then
+ TextBox1.Text = table.Rows(0)(0).ToString()
+ TextBox2.Text = table.Rows(0)(1).ToString()
+ TextBox3.Text = table.Rows(0)(2).ToString()
+ TextBox4.Text = table.Rows(0)(3).ToString()
+ TextBox5.Text = table.Rows(0)(4).ToString()
+ TextBox6.Text = table.Rows(0)(5).ToString()
+ Else
+ MessageBox.Show("NO Data Found")
+ End If
+ End Sub
+ Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button5.Click
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ End Sub
+ Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button6.Click
+ End
+ End Sub
+ Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button7.Click
+ appointment_report.show()
+ End Sub
+End Class
+
+
+PAYMENT DETAILS 
+
+
+Imports System.Data.SqlClient
+Public Class payment_details
+ Dim connection As New SqlConnection("Data Source=LAPTOP-
+FENEB2VD\SQLEXPRESS;Initial Catalog=project;Integrated Security=True")
+ Dim cn As New SqlConnection
+ Dim cmd As New SqlCommand
+ Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button1.Click
+ Dim command As New SqlCommand("INSERT into 
+t4(patient_id,name,date,consultation_fee,test_charges,medicine,room_charges,to
+tal_amount) VALUES( '" & TextBox1.Text & "','" & TextBox2.Text & "','" & 
+TextBox3.Text & "','" & TextBox4.Text & "','" & TextBox5.Text & "','" & 
+TextBox6.Text & "','" & TextBox7.Text & "','" & TextBox8.Text & "')", 
+connection)
+ connection.Open()
+ If command.ExecuteNonQuery() = 1 Then
+ MessageBox.Show("record inserted succesfully")
+ End If
+ connection.Close()
+ End Sub
+ Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button2.Click
+ Dim i As Double = TextBox4.Text
+ i += TextBox5.Text
+ i += TextBox6.Text
+ i += TextBox7.Text
+ TextBox8.Text = i.ToString
+ End Sub
+ Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button3.Click
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ TextBox7.Text = ""
+ TextBox8.Text = ""
+ End Sub
+ Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button4.Click
+ Dim command As New SqlCommand("select * from t4 where patient_id = 
+@patient_id", connection)
+ command.Parameters.Add("@patient_id", SqlDbType.VarChar).Value = 
+TextBox1.Text
+ Dim adapter As New SqlDataAdapter(command)
+ Dim table As New DataTable()
+ adapter.Fill(table)
+ TextBox1.Text = ""
+ TextBox2.Text = ""
+ TextBox3.Text = ""
+ TextBox4.Text = ""
+ TextBox5.Text = ""
+ TextBox6.Text = ""
+ TextBox7.Text = ""
+ TextBox8.Text = ""
+ If table.Rows.Count() > 0 Then
+ TextBox1.Text = table.Rows(0)(0).ToString()
+ TextBox2.Text = table.Rows(0)(1).ToString()
+ TextBox3.Text = table.Rows(0)(2).ToString()
+ TextBox4.Text = table.Rows(0)(3).ToString()
+ TextBox5.Text = table.Rows(0)(4).ToString()
+ TextBox6.Text = table.Rows(0)(5).ToString()
+ TextBox7.Text = table.Rows(0)(6).ToString()
+ TextBox8.Text = table.Rows(0)(7).ToString()
+ Else
+ MessageBox.Show("NO Data Found")
+ End If
+ End Sub
+ Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button5.Click
+ End
+ End Sub
+ Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As
+System.EventArgs) Handles Button6.Click
+ payment_report.show()
+ End Sub
+End Class 
+ 
+ 
+ 
